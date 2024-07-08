@@ -34,6 +34,7 @@
             <thead>
               <tr>
                 <th class="text-center">No</th>
+                <th class="text-center">ID</th>
                     <th class="text-center">Judul</th>
                     <th class="text-center">Blog</th>
                     <th class="text-center">Penulis</th>
@@ -46,6 +47,7 @@
               <?php foreach($data['blog'] as $row):?>
                 <tr>
                   <td><?=$i++ ?></td>
+                  <td ><?=$row['id_blog']?></td>
                   <td ><?=$row['judul_blog']?></td>
                   <td ><?=$row['deskripsi_blog']?></td>
                   <td ><?=$row['penulis_blog']?></td>
