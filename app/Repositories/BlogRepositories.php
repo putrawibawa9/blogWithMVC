@@ -1,5 +1,5 @@
 <?php
-class Blog_model{
+class BlogRepositories{
     private $db;
     private $queryBuilder;
 
