@@ -6,8 +6,8 @@ class Controller {
         require_once "../app/views/$view.php";
     }
 
-    public function model($model){
-          require_once "../app/models/$model.php";
-          return new $model;
+    public function repository($repository){
+          require_once "../app/repositories/$repository.php";
+          return new $repository;
     }
 }
