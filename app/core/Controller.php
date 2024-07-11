@@ -7,7 +7,7 @@ class Controller {
     }
 
     public function repository($repository){
-          require_once "../app/models/$repository.php";
+          require_once "../app/repositories/$repository.php";
           return new $repository;
     }
 }

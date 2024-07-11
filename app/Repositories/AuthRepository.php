@@ -1,29 +1,35 @@
 <?php
-// Controller for About
-class Auth extends Controller{
-    public function login(){
-      $this->view('auth/login');
-    }
+class AuthRepository extends Auth_model{
+    private $db;
+    private $queryBuilder;
 
-    public function signin(){
-        if($this->repository("AuthRepository")->login($_POST)){
-          $admin = $this->repository("AuthRepository")->login($_POST);
-          setcookie("admin", $admin, time() + 3600, '/');
-            header('Location: '. BASEURL . '/blog/viewBlog');
-      }else{
-        header("Location: ../index.php?status=0");
-        exit();
-      };
-    }
+public function __construct ()
+{
+    $this->db = new Database;
+    $this->queryBuilder = new QueryBuilder($this->db);
+}
 
-    public function logout(){
-        session_destroy();
-    }
+public function register($data){
+    // var_dump($data);
+    // exit;
+    $query = "INSERT INTO `admin` (`username`, `password`) VALUES (:username, :password)";
+    $this->db->query($query);
+    $this->db->bind('username', $data['username']);
+    $this->db->bind('password', password_hash($data['password'], PASSWORD_DEFAULT));
+    $this->db->execute();
+    return $this->db->rowCount();
+}
 
-    public function register(){
-      if($this->repository("AuthRepository")->register($_POST) > 0){
-           header('Location: '. BASEURL . '/auth/login');
-        }
-    }
+public function login($data){
 
+    $this->db->query("SELECT * FROM admin WHERE username = :username");
+    $this->db->bind('username', $data['username_admin']);
+    $passDB = $this->db->single();
+    if(isset($passDB['password'])){
+        $passwordVerify = password_verify($data['password_admin'], $passDB['password']);
+    }
+    if($passwordVerify){
+        return $data['username_admin'];
+    }
+}
 }

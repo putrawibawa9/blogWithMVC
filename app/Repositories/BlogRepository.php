@@ -1,16 +1,16 @@
 <?php
-class BlogRepositories{
+class BlogRepository extends Blog_model{
     private $db;
     private $queryBuilder;
 
-public function __construct ()
+public function __construct ( )
 {
     $this->db = new Database;
      $this->queryBuilder = new QueryBuilder($this->db);
 }
 
 public function view(){
-      return $this->queryBuilder->table('blog_sederhana')->select()->all();
+      return $this->queryBuilder->table($this->getTable())->select()->all();
     }
 
     public function save($data){
@@ -30,7 +30,7 @@ public function view(){
     }
 
      public function delete($id_blog){
-    var_dump( $this->queryBuilder->table('blog_sederhana')->where('id_blog', '=', $id_blog)->delete()->getQuery());
+        $this->queryBuilder->table('blog_sederhana')->where('id_blog', '=', $id_blog)->delete()->execute();
           return $this->db->rowCount();
     }
 
