@@ -14,10 +14,14 @@ class Blog extends Controller{
         $this->view('templates/footer');
     }
 
-      public function store($data){
-        var_dump($data);
-        exit;
-        if($this->repository("BlogRepository")->save($_POST) > 0){
+      public function store(){
+        $blog = new Blog_model;
+        $blog->penulis_blog = $_POST['penulis_blog'];
+        $blog->tanggal_pembuatan = $_POST['tanggal_pembuatan'];
+        $blog->judul_blog = $_POST['judul_blog'];
+        $blog->deskripsi_blog = $_POST['deskripsi_blog'];
+        
+        if($blog->insert() > 0){
             Flasher::setFlash('sucesfully', 'Added', 'success');
       header('Location: '. BASEURL . '/blog/viewBlog');
         }
@@ -37,8 +41,23 @@ class Blog extends Controller{
         $this->view('templates/footer');
     }
 
-     public function update(){
+     public function updatee(){
         if($this->repository("BlogRepository")->update($_POST) > 0){
+          Flasher::setFlash('sucesfully', 'updated', 'secondary'); 
+           header('Location: '. BASEURL . '/blog/viewBlog');
+        }
+    }
+
+     public function update()
+    {
+        $id_blog = $_POST['id_blog'];
+        $blog = new Blog_model;
+        $blog->id_blog = $_POST['id_blog'];
+        $blog->penulis_blog = $_POST['penulis_blog'];
+        $blog->tanggal_pembuatan = $_POST['tanggal_pembuatan'];
+        $blog->judul_blog = $_POST['judul_blog'];
+        $blog->deskripsi_blog = $_POST['deskripsi_blog'];        
+         if( $blog->update() > 0){
           Flasher::setFlash('sucesfully', 'updated', 'secondary'); 
            header('Location: '. BASEURL . '/blog/viewBlog');
         }

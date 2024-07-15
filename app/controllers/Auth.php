@@ -6,8 +6,9 @@ class Auth extends Controller{
     }
 
     public function signin(){
-        if($this->repository("AuthRepository")->login($_POST)){
-          $admin = $this->repository("AuthRepository")->login($_POST);
+        $auth = new Auth_model;
+        if($auth->login($_POST)){
+          $admin = $auth->login($_POST);
           setcookie("admin", $admin, time() + 3600, '/');
             header('Location: '. BASEURL . '/blog/viewBlog');
       }else{
@@ -21,7 +22,10 @@ class Auth extends Controller{
     }
 
     public function register(){
-      if($this->repository("AuthRepository")->register($_POST) > 0){
+      $auth = new Auth_model;
+      $auth->username = $_POST['username'];
+      $auth->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+      if($auth->insert() > 0){
            header('Location: '. BASEURL . '/auth/login');
         }
     }
