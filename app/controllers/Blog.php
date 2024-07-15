@@ -2,8 +2,8 @@
 
 class Blog extends Controller{
     public function viewBlog(){
-         $data['blog'] = $this->repository('BlogRepository')->view();
-          $this->view('templates/header', $data);
+        $data['blog'] = Blog_model::all();
+        $this->view('templates/header', $data);
         $this->view('blog/index', $data);
         $this->view('templates/footer');
     }
@@ -14,7 +14,9 @@ class Blog extends Controller{
         $this->view('templates/footer');
     }
 
-      public function save(){
+      public function store($data){
+        var_dump($data);
+        exit;
         if($this->repository("BlogRepository")->save($_POST) > 0){
             Flasher::setFlash('sucesfully', 'Added', 'success');
       header('Location: '. BASEURL . '/blog/viewBlog');
@@ -22,14 +24,14 @@ class Blog extends Controller{
     }
 
        public function delete($id_blog){
-        if($this->repository("BlogRepository")->delete($id_blog) > 0){
+        if(Blog_model::delete($id_blog) > 0){
             Flasher::setFlash('sucesfully', 'deleted', 'danger'); 
            header('Location: '. BASEURL . '/blog/viewBlog');
         }
     }
 
       public function viewOne($id_blog){
-        $data['blog'] = $this->repository('BlogRepository')->viewOne($id_blog);
+        $data['blog'] = Blog_model::find($id_blog);
         $this->view('templates/header');
         $this->view('blog/edit', $data);
         $this->view('templates/footer');

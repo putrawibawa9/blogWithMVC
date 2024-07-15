@@ -1,6 +1,7 @@
 <?php
 
 class Database{
+    private static $instance = null;
     private $host = DBHOST;
     private $user = DBUSER;
     private $db = DBNAME;
@@ -23,6 +24,14 @@ class Database{
         }catch(PDOException $e){
             die($e->errorInfo);
         }
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     public function query($query){

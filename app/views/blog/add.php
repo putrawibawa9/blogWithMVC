@@ -13,7 +13,7 @@
 <div class="container">
   <div class="row">
     <div class="col-12 p-3 bg-white">
-        <form method="post" action="<?= BASEURL?>/blog/save">
+        <form method="post" action="<?= BASEURL?>/blog/store">
           <input type="hidden" value="<?= $_COOKIE['admin']?>" name="penulis_blog">
           <input type="hidden" name="tanggal_pembuatan" value="<?php echo date('Y-m-d'); ?>">
             <div class="mb-3">
