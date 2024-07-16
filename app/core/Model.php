@@ -14,7 +14,7 @@ abstract class Model
     public static function all()
     {
         $instance = new static();
-        $instance->db->query('SELECT * FROM ' . static::$table);
+        $instance->db->query('SELECT * FROM ' . static::$table . ' ORDER BY id DESC');
         return $instance->db->resultSet();
     }
 

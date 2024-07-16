@@ -1,8 +1,8 @@
 <?php
 class App{
     // initiate the variable for each and set the default for each functionality
-    protected $controller = "auth";
-    protected $method = "login";
+    protected $controller = "bulletin";
+    protected $method = "viewBulletin";
     protected $params = [];
 
     // Controlling the url and manage it so that we can use it
